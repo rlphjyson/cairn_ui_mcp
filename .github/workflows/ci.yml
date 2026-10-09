@@ -21,5 +21,6 @@ jobs:
       - run: dart test
       - name: Compile the executable and smoke-test it
         run: |
+          mkdir -p build
           dart compile exe bin/cairn_ui_mcp.dart -o build/cairn_ui_mcp
           ./build/cairn_ui_mcp --info
