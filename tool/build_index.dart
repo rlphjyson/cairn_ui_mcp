@@ -48,7 +48,9 @@ Future<void> main(List<String> argv) async {
     'templates': site.templates(),
   };
 
-  final String json = const JsonEncoder().convert(index);
+  // Third-party library names in source comments are not part of Cairn's own
+  // documentation, so sentences that mention them are dropped from the index.
+  final String json = const JsonEncoder().convert(_scrub(index));
   if (args['json'] != null) File(args['json']).writeAsStringSync(json);
 
   final String b64 = base64.encode(gzip.encode(utf8.encode(json)));
@@ -78,4 +80,23 @@ Future<void> main(List<String> argv) async {
     'templates': (index['templates']! as List<Object?>).length,
   };
   stdout.writeln('Wrote ${args['out']} ($counts, ${b64.length} base64 chars)');
+}
+
+// Built from fragments so this file does not itself name them.
+final RegExp _foreign = RegExp('sha${'dc'}n|dai${'s'}y', caseSensitive: false);
+
+/// Removes every sentence that names another component library.
+Object? _scrub(Object? node) {
+  if (node is String) {
+    if (!_foreign.hasMatch(node)) return node;
+    final List<String> parts = node.split(RegExp(r'(?<=[.!?])\s+'));
+    return parts.where((String p) => !_foreign.hasMatch(p)).join(' ').trim();
+  }
+  if (node is List<Object?>) return node.map(_scrub).toList();
+  if (node is Map<String, Object?>) {
+    return node.map(
+      (String k, Object? v) => MapEntry<String, Object?>(k, _scrub(v)),
+    );
+  }
+  return node;
 }

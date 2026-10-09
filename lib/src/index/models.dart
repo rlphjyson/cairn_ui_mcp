@@ -237,7 +237,6 @@ class Template {
       kind = _s(j['kind']),
       summary = _s(j['summary']),
       description = _s(j['description']),
-      inspiration = j['inspiration'] as String?,
       screens = <(String, String)>[
         for (final Object? e
             in (j['screens'] as List<Object?>? ?? const <Object?>[]))
@@ -253,7 +252,6 @@ class Template {
   final String kind;
   final String summary;
   final String description;
-  final String? inspiration;
   final List<(String, String)> screens;
   final List<String> uses;
 }

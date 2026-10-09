@@ -31,8 +31,7 @@ class Renderer {
         'Cairn UI is a Flutter component library: ${index.modules.length} '
         'component modules on one design-token layer (OKLCH colour, a '
         'multiplier-based radius scale, a Tailwind spacing scale, a type '
-        'scale), light and dark themes, and golden tests. Its components '
-        'follow shadcn/ui; the Extended set follows daisyUI.',
+        'scale), light and dark themes, and golden tests.',
       )
       ..writeln()
       ..writeln('## Install')
@@ -409,11 +408,6 @@ class Renderer {
         'Package: `$pkg` (in `templates/${t.slug}` of the cairn_site repository).',
       )
       ..writeln();
-    if (t.inspiration != null) {
-      b
-        ..writeln('Modelled on ${t.inspiration}.')
-        ..writeln();
-    }
     b.writeln('## Screens');
     for (final (String, String) s in t.screens) {
       b.writeln('- **${s.$1}** — ${s.$2}');

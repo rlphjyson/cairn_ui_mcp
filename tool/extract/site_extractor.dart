@@ -235,7 +235,6 @@ class SiteExtractor {
         'kind': tailName(namedArg(c.args, 'kind')),
         'summary': stringValue(namedArg(c.args, 'summary')),
         'description': stringValue(namedArg(c.args, 'description')),
-        'inspiration': stringValue(namedArg(c.args, 'inspiration')),
         'screens': screenList,
         'uses': stringList(namedArg(c.args, 'uses')),
       });
