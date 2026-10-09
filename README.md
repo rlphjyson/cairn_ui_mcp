@@ -19,6 +19,7 @@ describe a parameter that does not exist.
 
 - [Install](#install)
 - [Connect your editor](#connect-your-editor)
+- [Agent skills](#agent-skills)
 - [What it provides](#what-it-provides)
 - [Using it](#using-it)
 - [Where the knowledge comes from](#where-the-knowledge-comes-from)
@@ -139,6 +140,39 @@ command = "cairn_ui_mcp"
 Run `cairn_ui_mcp` as a stdio MCP server. There are no arguments to pass and no
 environment variables to set.
 
+## Agent skills
+
+Skills teach an agent *how* to build with Cairn: the workflow, the rules and the
+exact reference material, loaded on demand. The server answers questions; a
+skill changes how the agent writes code. Use either or both.
+
+| Skill | Use it for |
+| --- | --- |
+| `cairn-ui` | Any Flutter UI built with Cairn: look up components and tokens, follow the rules, set up the theme. Ships the full API of every component. |
+| `cairn-dashboard` | Dashboards and admin panels: shells, KPI cards, tables, states, responsive layout. |
+| `cairn-charts` | Charts with `fl_chart` restyled through Cairn tokens, with five working recipes. |
+| `cairn-templates` | Starting a whole app from a template, rebranding it and connecting a backend. |
+
+Install them with the same binary:
+
+```bash
+cairn_ui_mcp install-skills                      # Claude Code, every project
+cairn_ui_mcp install-skills --target project     # this project only (./.claude/skills)
+cairn_ui_mcp install-skills --target codex       # Codex
+cairn_ui_mcp install-skills --dir <folder>       # any agent that reads skill folders
+cairn_ui_mcp install-skills --skill cairn-ui     # just one
+cairn_ui_mcp install-skills --list
+```
+
+Each skill is a folder with a `SKILL.md` and a `references/` directory, the
+standard agent-skill layout. You can also copy the folders from
+[`skills/`](skills) by hand. Re-running the command updates them; it never
+overwrites a skill of the same name that it did not install unless you pass
+`--force`.
+
+After installing, ask the agent to "use the cairn-ui skill", or just describe
+what you want: the skill descriptions tell the agent when to load them.
+
 ## What it provides
 
 ### Tools
@@ -202,12 +236,17 @@ package so `dart compile exe` produces a self-contained binary:
 | `cairn_ui` `lib/src/tokens/**`, `lib/src/theme/**` | Every design token and the theme API |
 | `cairn_site` `lib/src/data/**` | Each component's quick start and variant examples, the guides, blocks and templates |
 
-Rebuild it when either changes:
+Rebuild it when either changes. The skills are generated from the same index
+and the site's templates, so rebuild them afterwards:
 
 ```bash
 dart run tool/build_index.dart --cairn-ui ../cairn_ui --site ../cairn_site
+dart run tool/build_skills.dart --site ../cairn_site
 dart test
 ```
+
+The `SKILL.md` files are written by hand in `tool/skills_src/`; everything
+under `references/` is generated.
 
 ## Develop
 
@@ -227,7 +266,9 @@ lib/src/server/             tools, resources and prompts (dart_mcp)
 lib/src/index/              typed models and the generated index
 lib/src/search/             plain-language ranking with synonyms
 lib/src/render/             Markdown rendering, llms.txt
-tool/                       the index generator (analyzer-based)
+lib/src/skills/             the bundled skills and the installer
+tool/                       the index and skills generators (analyzer-based)
+skills/                     the generated agent skills
 test/                       index, search, rendering and end-to-end server tests
 ```
 

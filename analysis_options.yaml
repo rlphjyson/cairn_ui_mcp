@@ -1,0 +1,7 @@
+include: package:lints/recommended.yaml
+
+analyzer:
+  exclude:
+    # Reference code for the agent skills; it imports packages this one does
+    # not depend on.
+    - skills/**

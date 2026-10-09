@@ -224,9 +224,11 @@ List<String> _tokens(String q) => <String>[
 ];
 
 String _singular(String t) {
-  if (t.endsWith('ies') && t.length > 4)
+  if (t.endsWith('ies') && t.length > 4) {
     return '${t.substring(0, t.length - 3)}y';
-  if (t.endsWith('s') && !t.endsWith('ss') && t.length > 3)
+  }
+  if (t.endsWith('s') && !t.endsWith('ss') && t.length > 3) {
     return t.substring(0, t.length - 1);
+  }
   return t;
 }

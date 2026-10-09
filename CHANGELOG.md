@@ -4,6 +4,8 @@
 
 First release.
 
+- Agent skills `cairn-ui`, `cairn-dashboard`, `cairn-charts` and `cairn-templates`, with generated references, and `cairn_ui_mcp install-skills`.
+
 - Tools: `cairn_overview`, `list_components`, `search_components`,
   `get_component`, `get_tokens`, `get_theme`, `list_blocks`, `get_block`,
   `list_templates`, `get_template`, `get_docs`.

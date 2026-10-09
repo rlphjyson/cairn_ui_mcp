@@ -74,8 +74,9 @@ class SiteExtractor {
     ]) {
       final CompilationUnit unit = _parse(file);
       for (final CompilationUnitMember d in unit.declarations) {
-        if (d is! ClassDeclaration || d.namePart.typeName.lexeme != cls)
+        if (d is! ClassDeclaration || d.namePart.typeName.lexeme != cls) {
           continue;
+        }
         final ClassBody body = d.body;
         if (body is! BlockClassBody) continue;
         for (final ClassMember m in body.members) {
