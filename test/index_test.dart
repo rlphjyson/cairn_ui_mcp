@@ -12,7 +12,7 @@ void main() {
       expect(index.components.length, greaterThanOrEqualTo(70));
       expect(index.docs, isNotEmpty);
       expect(index.blocks, hasLength(5));
-      expect(index.templates, hasLength(5));
+      expect(index.templates, hasLength(11));
     });
 
     test('every component has a description, an API and a quick start', () {

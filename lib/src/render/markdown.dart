@@ -397,8 +397,14 @@ class Renderer {
       'blog' => 'BlogApp',
       'docs' => 'DocsApp',
       'landing' => 'LandingApp',
+      'auth' => 'AuthApp',
+      'chat' => 'ChatApp',
+      'onboarding' => 'OnboardingApp',
+      'settings' => 'SettingsApp',
+      'app_landing' => 'AppLandingApp',
       _ => 'App',
     };
+    if (t.slug == 'jaspr_store') return _serverTemplate(t);
     final StringBuffer b = StringBuffer()
       ..writeln('# ${t.name} template (${t.kind.toLowerCase()})')
       ..writeln()
@@ -437,6 +443,47 @@ class Renderer {
         'Each template is a standalone package with its own assets, tests and '
         'an HTML tutorial (`doc/index.html`) covering content changes, theming, '
         'connecting a backend and migration.',
+      );
+    return b.toString();
+  }
+
+  /// The server-rendered template, which is a Jaspr app rather than a Flutter
+  /// package.
+  String _serverTemplate(Template t) {
+    final StringBuffer b = StringBuffer()
+      ..writeln('# ${t.name} template (web, server-rendered)')
+      ..writeln()
+      ..writeln(t.description)
+      ..writeln()
+      ..writeln(
+        'This is a Jaspr app (Dart that renders HTML on the server), not a '
+        'Flutter package: it cannot be mounted inside a Flutter widget tree. '
+        'Use it when search ranking matters, because every page carries its '
+        'own meta tags and structured data. It lives in '
+        '`templates/${t.slug}` of the cairn_site repository.',
+      )
+      ..writeln()
+      ..writeln('## Pages');
+    for (final (String, String) s in t.screens) {
+      b.writeln('- **${s.$1}** — ${s.$2}');
+    }
+    b
+      ..writeln()
+      ..writeln('## Run it')
+      ..writeln()
+      ..writeln(
+        '```bash\n'
+        'cd templates/${t.slug}\n'
+        'dart pub get\n'
+        'dart run build_runner build\n'
+        'dart pub global activate jaspr_cli\n'
+        'jaspr serve   # http://localhost:8080\n'
+        '```',
+      )
+      ..writeln()
+      ..writeln(
+        'Its `doc/index.html` covers the catalogue, rebranding, SEO, backend '
+        'integration, deployment and migration.',
       );
     return b.toString();
   }

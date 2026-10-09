@@ -32,7 +32,7 @@ You need the [Dart SDK](https://dart.dev/get-dart) (it comes with Flutter).
 ```bash
 dart pub global activate --source git https://github.com/rlphjyson/cairn_ui_mcp.git
 cairn_ui_mcp --info
-# cairn_ui_mcp 0.1.0: cairn_ui 0.2.0, 70 components, 8 guides, 5 blocks, 5 templates.
+# cairn_ui_mcp 0.1.0: cairn_ui 0.2.0, 70 components, 8 guides, 5 blocks, 11 templates.
 ```
 
 Make sure `~/.pub-cache/bin` (on Windows, `%LOCALAPPDATA%\Pub\Cache\bin`) is on
